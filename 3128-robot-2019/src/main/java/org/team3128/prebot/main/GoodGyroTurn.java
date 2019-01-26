@@ -122,6 +122,7 @@ public class GoodGyroTurn extends NarwhalRobot {
     @Override
     protected void updateDashboard() {
         //NarwhalDashboard.put("tx", table.getEntry("tx").getNumber(0));
+        //hey
         NarwhalDashboard.put("tx", table.getEntry("tx").getDouble(0.0));
         NarwhalDashboard.put("ty", table.getEntry("ty").getDouble(0.0));
         NarwhalDashboard.put("tv", table.getEntry("tv").getDouble(0.0));
