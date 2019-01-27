@@ -209,7 +209,7 @@ public class MainPrebot extends NarwhalRobot {
   
         });
 
-        lm.nameControl(new Button(11), "DriveLL");
+       /* lm.nameControl(new Button(11), "DriveLL");
         lm.addButtonDownListener("DriveLL", () -> {
             for(int i = 0; i<2000; i++){
                 Log.info("trigger", "trigger triggered");
@@ -225,7 +225,7 @@ public class MainPrebot extends NarwhalRobot {
             Log.info("tyav", String.valueOf(valCurrent2));
             NarwhalDashboard.put("tyav", String.valueOf(valCurrent2));
             valCurrent2 = 0.0;
-        });
+        });*/
     }
     
     @Override
@@ -248,6 +248,37 @@ public class MainPrebot extends NarwhalRobot {
         SmartDashboard.putNumber("Max Left Speed", maxLeftSpeed);
         SmartDashboard.putNumber("Max Right Speed", maxRightSpeed);
 		
+    }
+    @Override
+    protected void teleopInit() {
+        ahrs.reset();
+        //gyroTurnClass.gyroTurn(leftDriveFront,rightDriveFront,359.9);
+        
+    }
+
+    @Override
+    protected void teleopPeriodic() {
+  
+        Double yaw=ahrs.getAngle();
+        Float pitchThreshold = (float)10;     
+        Float pitch=ahrs.getPitch();
+        Float roll=ahrs.getRoll();
+        Log.debug("pitch", Float.toString(pitch));
+        Log.debug("roll", Float.toString(roll));
+        if (roll>2){
+            leftDriveFront.set(ControlMode.PercentOutput,(0.2));
+      	rightDriveFront.set(ControlMode.PercentOutput,(0.2));
+        }
+        if (roll<-2){
+        leftDriveFront.set(ControlMode.PercentOutput,(-0.2));
+      	rightDriveFront.set(ControlMode.PercentOutput,(-0.2));
+        }
+        if(roll<10&&roll>-10){
+        leftDriveFront.set(ControlMode.PercentOutput,(0));
+      	rightDriveFront.set(ControlMode.PercentOutput,(0));
+        }
+            
+   
     }
     public static void main(String... args) {
         RobotBase.startRobot(MainPrebot::new);
