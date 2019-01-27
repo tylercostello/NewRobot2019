@@ -151,14 +151,14 @@ public class GoodGyroTurn extends NarwhalRobot {
     @Override
     protected void teleopInit() {
         ahrs.reset();
-        gyroTurnClass.gyroTurn(leftDriveFront,rightDriveFront,359.9);
+        //gyroTurnClass.gyroTurn(leftDriveFront,rightDriveFront,359.9);
         
     }
 
     @Override
     protected void teleopPeriodic() {
   
-       /* Double yaw=ahrs.getAngle();
+        Double yaw=ahrs.getAngle();
         Float pitchThreshold = (float)10;     
         Float pitch=ahrs.getPitch();
         while (yaw<359.9){
@@ -175,7 +175,7 @@ public class GoodGyroTurn extends NarwhalRobot {
           
         }
         leftDriveFront.set(ControlMode.PercentOutput,(0));
-      	rightDriveFront.set(ControlMode.PercentOutput,(0));*/
+      	rightDriveFront.set(ControlMode.PercentOutput,(0));
    
     }
 
