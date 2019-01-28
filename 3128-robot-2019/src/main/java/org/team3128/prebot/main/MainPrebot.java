@@ -263,17 +263,18 @@ public class MainPrebot extends NarwhalRobot {
         Float pitchThreshold = (float)10;     
         Float pitch=ahrs.getPitch();
         Float roll=ahrs.getRoll();
+        Float rollThreshold=(float)2;
         Log.debug("pitch", Float.toString(pitch));
         Log.debug("roll", Float.toString(roll));
-        if (roll>2){
+        if (roll>rollThreshold){
             leftDriveFront.set(ControlMode.PercentOutput,(0.2));
       	rightDriveFront.set(ControlMode.PercentOutput,(0.2));
         }
-        if (roll<-2){
+        if (roll<-rollThreshold){
         leftDriveFront.set(ControlMode.PercentOutput,(-0.2));
       	rightDriveFront.set(ControlMode.PercentOutput,(-0.2));
         }
-        if(roll<10&&roll>-10){
+        if(roll<rollThreshold&&roll>-rollThreshold){
         leftDriveFront.set(ControlMode.PercentOutput,(0));
       	rightDriveFront.set(ControlMode.PercentOutput,(0));
         }
