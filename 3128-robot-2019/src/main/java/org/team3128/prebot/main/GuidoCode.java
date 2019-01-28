@@ -267,12 +267,12 @@ public class GuidoCode extends NarwhalRobot {
         Log.debug("pitch", Float.toString(pitch));
         Log.debug("roll", Float.toString(roll));
         if (pitch>pitchThreshold){
-            leftDriveFront.set(ControlMode.PercentOutput,(0.2));
-      	rightDriveFront.set(ControlMode.PercentOutput,(0.2));
+            leftDriveFront.set(ControlMode.PercentOutput,(-0.2));
+      	rightDriveFront.set(ControlMode.PercentOutput,(-0.2));
         }
         if (pitch<-pitchThreshold){
-        leftDriveFront.set(ControlMode.PercentOutput,(-0.2));
-      	rightDriveFront.set(ControlMode.PercentOutput,(-0.2));
+        leftDriveFront.set(ControlMode.PercentOutput,(0.2));
+      	rightDriveFront.set(ControlMode.PercentOutput,(0.2));
         }
         if(pitch<pitchThreshold&&pitch>-pitchThreshold){
         leftDriveFront.set(ControlMode.PercentOutput,(0));
