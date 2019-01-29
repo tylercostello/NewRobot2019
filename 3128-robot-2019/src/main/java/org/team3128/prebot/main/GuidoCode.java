@@ -35,7 +35,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class GuidoCode extends NarwhalRobot {
     
     public AHRS ahrs;
-
+    public boolean tipped=false;
     public TalonSRX rightDriveFront;
     //public TalonSRX rightDriveMiddle;
     public TalonSRX rightDriveBack;
@@ -260,24 +260,33 @@ public class GuidoCode extends NarwhalRobot {
     protected void teleopPeriodic() {
   
         Double yaw=ahrs.getAngle();
-        Float pitchThreshold = (float)2;     
+        Float pitchThreshold = (float)12;     
         Float pitch=ahrs.getPitch();
         Float roll=ahrs.getRoll();
         Float rollThreshold=(float)4;
         Log.debug("pitch", Float.toString(pitch));
-        Log.debug("roll", Float.toString(roll));
+       // Log.debug("roll", Float.toString(roll));
+      while (pitch>pitchThreshold||pitch<-pitchThreshold){
+        Log.debug("tipping", "tipping");
+        pitch=ahrs.getPitch();    
         if (pitch>pitchThreshold){
-            leftDriveFront.set(ControlMode.PercentOutput,(-0.2));
+        tipped=true;
+        leftDriveFront.set(ControlMode.PercentOutput,(-0.2));
       	rightDriveFront.set(ControlMode.PercentOutput,(-0.2));
         }
+        pitch=ahrs.getPitch();
         if (pitch<-pitchThreshold){
+        tipped=true;
         leftDriveFront.set(ControlMode.PercentOutput,(0.2));
       	rightDriveFront.set(ControlMode.PercentOutput,(0.2));
         }
-        if(pitch<pitchThreshold&&pitch>-pitchThreshold){
+        if(pitch<pitchThreshold&&pitch>-pitchThreshold&&tipped){
+        tipped=false;
         leftDriveFront.set(ControlMode.PercentOutput,(0));
       	rightDriveFront.set(ControlMode.PercentOutput,(0));
         }
+        pitch=ahrs.getPitch();
+    }
             
    
     }
