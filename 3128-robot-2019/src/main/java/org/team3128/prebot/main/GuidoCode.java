@@ -35,11 +35,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class GuidoCode extends NarwhalRobot {
     
     public AHRS ahrs;
-    Double yaw=ahrs.getAngle();
-    Float pitchThreshold = (float)12;     
-    Float pitch=ahrs.getPitch();
-    Float roll=ahrs.getRoll();
-    Float rollThreshold=(float)4;
+ 
     public boolean tipped=false;
     public TalonSRX rightDriveFront;
     //public TalonSRX rightDriveMiddle;
@@ -263,7 +259,11 @@ public class GuidoCode extends NarwhalRobot {
 
     @Override
     protected void teleopPeriodic() {
-  
+        Double yaw=ahrs.getAngle();
+        Float pitchThreshold = (float)12;     
+        Float pitch=ahrs.getPitch();
+        Float roll=ahrs.getRoll();
+        Float rollThreshold=(float)4;
  
         Log.debug("pitch", Float.toString(pitch));
        // Log.debug("roll", Float.toString(roll));
@@ -272,24 +272,30 @@ public class GuidoCode extends NarwhalRobot {
         Log.debug("tipping", "tipping");
         pitch=ahrs.getPitch();    
         if (pitch>pitchThreshold){
-        //tipped=true;
+        tipped=true;
         leftDriveFront.set(ControlMode.PercentOutput,(-0.2));
       	rightDriveFront.set(ControlMode.PercentOutput,(-0.2));
         }
         pitch=ahrs.getPitch();
         if (pitch<-pitchThreshold){
-        //tipped=true;
+        tipped=true;
         leftDriveFront.set(ControlMode.PercentOutput,(0.2));
       	rightDriveFront.set(ControlMode.PercentOutput,(0.2));
         }
         pitch=ahrs.getPitch();
         if(pitch<pitchThreshold&&pitch>-pitchThreshold){
-        //tipped=false;
+        tipped=false;
         leftDriveFront.set(ControlMode.PercentOutput,(0));
       	rightDriveFront.set(ControlMode.PercentOutput,(0));
         }
         pitch=ahrs.getPitch();
     }
+    pitch=ahrs.getPitch();
+    if(pitch<pitchThreshold&&pitch>-pitchThreshold&&tipped==true){
+        tipped=false;
+        leftDriveFront.set(ControlMode.PercentOutput,(0));
+      	rightDriveFront.set(ControlMode.PercentOutput,(0));
+        }
             
    
     }
