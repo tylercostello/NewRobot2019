@@ -51,7 +51,7 @@ public class GuidoCode extends NarwhalRobot {
     public ListenerManager lm;
 
     public ADXRS450_Gyro gyro;
-
+    public TalonSRX forkliftMotorLeader, forkliftMotorFollower;
     public double wheelCirc;
     public double wheelDiameter;
 
@@ -87,7 +87,8 @@ public class GuidoCode extends NarwhalRobot {
         //leftDriveMiddle.set(ControlMode.Follower, leftDriveFront.getDeviceID());
         rightDriveBack.set(ControlMode.Follower, rightDriveFront.getDeviceID());
         leftDriveBack.set(ControlMode.Follower, leftDriveFront.getDeviceID());
-
+        forkliftMotorLeader = new TalonSRX(30);
+		forkliftMotorFollower = new TalonSRX(31);
         wheelCirc = 12.42*Length.in;
         //wheelDiameter = 3.68 * Length.in;
         SRXTankDrive.initialize(rightDriveFront, leftDriveFront, wheelCirc, 1, 68.107, 4200);
@@ -142,6 +143,15 @@ public class GuidoCode extends NarwhalRobot {
 					true);		
         }, "MoveTurn", "MoveForwards", "Throttle");
 
+       /*
+        lm.nameControl(new Button(2), "Down");
+        lm.addButtonDownListener("Down", () ->
+		{
+            forkliftMotorFollower.set(ControlMode.PercentOutput,(-0.2));
+            forkliftMotorLeader.set(ControlMode.PercentOutput,(-0.2));
+           //ightDriveFront.set(ControlMode.PercentOutput,(0.2));
+			//tankDrive.tankDrive(1, 1);
+        });*/
         lm.nameControl(new Button(12), "FullSpeed");
         lm.addButtonDownListener("FullSpeed", () ->
 		{
@@ -151,7 +161,14 @@ public class GuidoCode extends NarwhalRobot {
 		{
 			tankDrive.tankDrive(0, 0);
 		});
-
+        lm.nameControl(new Button(3), "Up");
+        lm.addButtonDownListener("Up", () ->
+		{
+            forkliftMotorFollower.set(ControlMode.PercentOutput,(0.2));
+            //forkliftMotorLeader.set(ControlMode.PercentOutput,(-0.2));
+           //ightDriveFront.set(ControlMode.PercentOutput,(0.2));
+			//tankDrive.tankDrive(1, 1);
+        });
         lm.nameControl(new Button(11), "HalfSpeed");
 		lm.addButtonDownListener("HalfSpeed", () ->
 		{
