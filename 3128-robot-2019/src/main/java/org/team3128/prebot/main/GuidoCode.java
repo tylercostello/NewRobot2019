@@ -164,7 +164,14 @@ public class GuidoCode extends NarwhalRobot {
         lm.nameControl(new Button(3), "Up");
         lm.addButtonDownListener("Up", () ->
 		{
-            forkliftMotorFollower.set(ControlMode.PercentOutput,(0.2));
+            forkliftMotorFollower.set(ControlMode.PercentOutput,(0.8));
+            //forkliftMotorLeader.set(ControlMode.PercentOutput,(-0.2));
+           //ightDriveFront.set(ControlMode.PercentOutput,(0.2));
+			//tankDrive.tankDrive(1, 1);
+        });
+        lm.addButtonUpListener("Up", () ->
+		{
+            forkliftMotorFollower.set(ControlMode.PercentOutput,(0));
             //forkliftMotorLeader.set(ControlMode.PercentOutput,(-0.2));
            //ightDriveFront.set(ControlMode.PercentOutput,(0.2));
 			//tankDrive.tankDrive(1, 1);
