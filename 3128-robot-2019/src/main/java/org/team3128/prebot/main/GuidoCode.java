@@ -277,6 +277,51 @@ public class GuidoCode extends NarwhalRobot {
     @Override
     protected void teleopInit() {
         ahrs.reset();
+        Double yaw=ahrs.getAngle();
+        Float pitchThreshold = (float)9;     
+        //Float pitch=ahrs.getPitch();
+        Float roll=ahrs.getRoll();
+        Float rollThreshold=(float)4;
+ 
+        //Log.debug("pitch", Float.toString(pitch));
+       // Log.debug("roll", Float.toString(roll));
+       //pitch=ahrs.getPitch();
+        Thread t = new Thread(() -> {
+            while (!Thread.interrupted()){
+                Float pitch=ahrs.getPitch();
+                //while(true){
+                pitch=ahrs.getPitch();
+      while (pitch>pitchThreshold||pitch<-pitchThreshold){
+        Log.debug("tipping", "tipping");
+        pitch=ahrs.getPitch();    
+        if (pitch>pitchThreshold){
+        tipped=true;
+        leftDriveFront.set(ControlMode.PercentOutput,(-0.5));
+      	rightDriveFront.set(ControlMode.PercentOutput,(-0.5));
+        }
+        pitch=ahrs.getPitch();
+        if (pitch<-pitchThreshold){
+        tipped=true;
+        leftDriveFront.set(ControlMode.PercentOutput,(0.5));
+      	rightDriveFront.set(ControlMode.PercentOutput,(0.5));
+        }
+        pitch=ahrs.getPitch();
+        if(pitch<pitchThreshold&&pitch>-pitchThreshold){
+        tipped=false;
+        leftDriveFront.set(ControlMode.PercentOutput,(0));
+      	rightDriveFront.set(ControlMode.PercentOutput,(0));
+        }
+        pitch=ahrs.getPitch();
+    }
+    pitch=ahrs.getPitch();
+    if(pitch<pitchThreshold&&pitch>-pitchThreshold&&tipped==true){
+        tipped=false;
+        leftDriveFront.set(ControlMode.PercentOutput,(0));
+      	rightDriveFront.set(ControlMode.PercentOutput,(0));
+        }
+            }
+        });
+        t.start();
         //gyroTurnClass.gyroTurn(leftDriveFront,rightDriveFront,359.9);
         
     }
@@ -289,7 +334,7 @@ public class GuidoCode extends NarwhalRobot {
         Float roll=ahrs.getRoll();
         Float rollThreshold=(float)4;
  
-        Log.debug("pitch", Float.toString(pitch));
+        //Log.debug("pitch", Float.toString(pitch));
        // Log.debug("roll", Float.toString(roll));
        pitch=ahrs.getPitch();
       while (pitch>pitchThreshold||pitch<-pitchThreshold){
